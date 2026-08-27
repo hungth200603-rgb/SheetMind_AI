@@ -46,6 +46,44 @@ Các kịch bản dưới đây định nghĩa cách hệ thống (đặc biệt
 | **Complex Flow** | **DP-03: Multi-page Invoice**          | Hóa đơn dài nhiều trang hoặc bảng item bị cắt đôi qua 2 trang.   | 1. Split & Convert toàn bộ thành chuỗi ảnh Base64.<br>2. Gửi tập hợp ảnh trong cùng 1 Context Window.<br>3. Merge danh sách items. | Bảng dữ liệu Excel liên tục, không bị đứt gãy hoặc lặp header.             |
 | **Edge Case**    | **DP-04: Non-Invoice Document**        | Người dùng tải nhầm file không phải hóa đơn (CV, Phong cảnh...). | 1. VLM Classification ở bước đầu.<br>2. Trả về cờ `is_invoice: false`.<br>3. Hủy bỏ pipeline trích xuất.                           | Hủy xử lý, báo lỗi "Tài liệu không hợp lệ" trên UI để tiết kiệm Token API. |
 
+### 2.5. User Use-Case Scenarios (Kịch bản người dùng sử dụng hệ thống)
+
+Dưới đây là 3 kịch bản thực tế đại diện cho các đối tượng người dùng (Kế toán, Nhân viên nhập liệu) khi tương tác với giao diện Web:
+
+#### Scenario 1: Kế toán cần nhập nhanh 1 hóa đơn VAT vừa nhận
+
+- **Bối cảnh:** Chị Lan (Kế toán) nhận được 1 hóa đơn tiền điện dạng file PDF qua email và cần lấy ngay dữ liệu để điền vào phần mềm kế toán.
+- **Các bước thao tác:**
+  1. Chị Lan truy cập vào trang web **SheetMind AI**.
+  2. Kéo thả trực tiếp file PDF hóa đơn vào khu vực **Upload Zone**.
+  3. Hệ thống hiển thị thanh tải lên và tự động kích hoạt AI trích xuất.
+  4. Sau 3 giây, file Excel `.xlsx` tự động được tải về máy tính của chị.
+- **Kết quả:** Chị Lan mở file Excel, copy dữ liệu chính xác vào hệ thống mà không cần nhập tay dòng nào.
+
+---
+
+#### Scenario 2: Kiểm tra và sửa đổi hóa đơn chữ viết tay / mờ (Human-in-the-Loop)
+
+- **Bối cảnh:** Anh Nam nhận được một hóa đơn bán lẻ chụp bằng điện thoại, chữ viết tay hơi mờ và lo ngại AI trích xuất bị sai tổng tiền.
+- **Các bước thao tác:**
+  1. Anh Nam tải ảnh hóa đơn lên web và chọn chế độ **"Review Mode" (Kiểm duyệt)**.
+  2. Màn hình chuyển sang giao diện **Side-by-Side**: Bên trái hiển thị ảnh hóa đơn gốc, bên phải là Form dữ liệu AI vừa trích xuất.
+  3. Trường "Tổng tiền" bị tô màu vàng cảnh báo (độ tin cậy thấp). Anh Nam đối chiếu với ảnh bên trái và thấy AI nhận diện thiếu 1 số 0.
+  4. Anh Nam nhấp vào ô "Tổng tiền", sửa lại cho đúng và bấm nút **"Xác nhận & Xuất Excel"**.
+- **Kết quả:** Dữ liệu chuẩn xác 100% được xuất ra file Excel, tránh được rủi ro sai sót số liệu kế toán.
+
+---
+
+#### Scenario 3: Xử lý hàng loạt hóa đơn cuối tháng
+
+- **Bối cảnh:** Cuối tháng, bộ phận tài chính cần tổng hợp 40 hóa đơn mua hàng dạng ảnh và PDF từ nhiều nhà cung cấp khác nhau.
+- **Các bước thao tác:**
+  1. Người dùng chọn tất cả 40 file hóa đơn (hoặc file `.zip`) và kéo thả vào hệ thống.
+  2. Giao diện hiển thị danh sách 40 file kèm thanh tiến trình tổng (Progress Bar).
+  3. Hệ thống lần lượt xử lý các file và hiển thị trạng thái xanh `Done` cho từng file.
+  4. Bấm nút **"Tải về file Excel tổng hợp"**.
+- **Kết quả:** Người dùng nhận về 1 file Excel duy nhất chứa bảng tổng hợp dữ liệu của toàn bộ 40 hóa đơn, tiết kiệm hơn 90% thời gian so với nhập liệu thủ công.
+
 ---
 
 ## 3. Technical Stack
