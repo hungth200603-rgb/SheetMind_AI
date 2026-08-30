@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trang chủ - SheetMind AI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="login_card" style="text-align: center">
+      <h2>🎉 Chào mừng bạn!</h2>
+      <p id="user_name" style="color: #555; margin-bottom: 20px">
+        Đang tải thông tin...
+      </p>
+
+      <button
+        id="btn_logout"
+        class="btn_submit"
+        style="background-color: #dc3545"
+      >
+        Đăng xuất
+      </button>
+    </div>
+
+    <script>
+      // Lấy tên người dùng đã lưu lúc đăng nhập
+      const currentUser = localStorage.getItem("currentUser");
+
+      if (!currentUser) {
+        // Nếu chưa đăng nhập mà đòi vào trang chủ -> Đá về trang đăng nhập
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("user_name").innerText =
+          "Xin chào, " + currentUser;
+      }
+
+      // Xử lý Đăng xuất
+      document
+        .getElementById("btn_logout")
+        .addEventListener("click", function () {
+          localStorage.removeItem("currentUser");
+          window.location.href = "index.html";
+        });
+    </script>
+  </body>
+</html>

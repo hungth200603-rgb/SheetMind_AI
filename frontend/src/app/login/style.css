@@ -1,0 +1,101 @@
+/* 1. Xử lý ảnh nền full màn hình & căn giữa khung login */
+body {
+  background-image: url("../../../public/images/background_login.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Arial, sans-serif;
+}
+
+/* 2. Ô vuông trắng chính giữa */
+.login_card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.login_card h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #333333;
+}
+
+/* 3. Các nhóm ô nhập liệu */
+.input_group {
+  margin-bottom: 16px;
+}
+
+.input_group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #555555;
+}
+
+.input_group input[type="text"],
+.input_group input[type="email"],
+.input_group input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* 4. Ghi nhớ tôi */
+.remember_me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #555555;
+}
+
+/* 5. Nút đăng nhập */
+.btn_submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn_submit:hover {
+  background-color: #0056b3;
+}
+
+/* 6. Link đăng ký */
+.register_link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.register_link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register_link a:hover {
+  text-decoration: underline;
+}
